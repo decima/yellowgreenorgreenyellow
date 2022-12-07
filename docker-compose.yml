@@ -1,14 +1,49 @@
 version: "3.7"
+volumes:
+  yggy-data:
 services:
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - yggy-data:/var/lib/influxdb2:rw
+    ports:
+      - "8086:8086"
+    # Use the influx cli to set up an influxdb instance.
+  influxdb_cli:
+    links:
+      - influxdb
+    image: influxdb:latest
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - yggy-data:/var/lib/influxdb2:rw
+    environment:
+      # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=myusername
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
+    entrypoint: [ "./entrypoint.sh" ]
+    restart: on-failure
+    depends_on:
+      - influxdb
+
   application:
-    image: BOILERPLATE:1.0
+    image: decima/yggy:1.0
     build:
       context: .
       args:
         app_version: 1.0
     environment:
-      - BOILERPLATE_SERVER_PORT=10000
-      - BOILERPLATE_SERVER_HOST=0.0.0.0
+      - YGGY_SERVER_PORT=10000
+      - YGGY_SERVER_HOST=0.0.0.0
+      - YGGY_SERVER_PROXY=[0.0.0.0/0]
+      - YGGY_INFLUX_URL=http://influxdb:8086
+      - YGGY_INFLUX_TOKEN=7_GNRyLB1VINSYbyZHnSpqeRScwOOLq58lU4qm7hXCUy7qR_X1-hgHDYesx328-ufZTSTA9eqc6JhfV4bUtl-A==
+      - YGGY_INFLUX_ORG=yggy
+      - YGGY_INFLUX_BUCKET=yggy
     ports:
       - 9000:10000
 

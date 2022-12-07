@@ -32,7 +32,7 @@ What is **not** included:
     - download a tarball of it ([let me do it for you](https://github.com/decima/svelte-go-boilerplate/archive/refs/heads/main.zip))
     - or...
     - use the "templating" feature from github ([let me do it for you](https://github.com/decima/svelte-go-boilerplate/generate))
-- There is a script named `rename.sh`, it is used to replace "BOILERPLATE" in every strings by the name you decide. Be careful to name it well (there's no turning back)
+- There is a script named `rename.sh`, it is used to replace "yellowgreenorgreenyellow" in every strings by the name you decide. Be careful to name it well (there's no turning back)
   - run `chmod a+x rename.sh && ./rename.sh`
 
 So you have a fresh project how to work with it ? 

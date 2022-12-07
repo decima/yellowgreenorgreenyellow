@@ -1,14 +1,26 @@
 <script>
-    import Navbar from "./components/layout/Navbar.svelte";
+    import logo from './assets/logo.svg';
     import {Route, Router} from "svelte-navigator";
-    import Health from "./components/pages/Health.svelte";
-    import Home from "./components/pages/Home.svelte";
-</script>
-<Router>
-    <Navbar/>
+    import Home from "./pages/Home.svelte";
+    import Stats from "./pages/Stats.svelte";
 
-    <main class="mx-auto container">
-        <Route path="" component={Home}/>
-        <Route path="health" component={Health}/>
-    </main>
-</Router>
+</script>
+
+<main class="w-screen h-screen flex flex-col">
+<div class="flex-grow">
+       <Router>
+           <Route path="" component={Home} primary={false}/>
+           <Route path="stats" component={Stats} primary={false}/>
+       </Router>
+</div>
+<footer class="mb-2 w-full text-center">
+    made with ❤️ by <a  class="underline text-accent" href="https://twitter.com/d3cima" target="_blank">@d3cima</a>
+</footer>
+</main>
+<style>
+
+    main {
+        overflow: auto;
+        background: linear-gradient(-115deg, #e3f1cf 0%, #b9ff46 100%);
+    }
+</style>

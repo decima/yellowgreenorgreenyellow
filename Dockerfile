@@ -12,15 +12,15 @@ WORKDIR /app
 ARG app_version=dev
 RUN go mod download
 COPY . /app
-RUN CGO_ENABLED=0 go build -o BOILERPLATE -ldflags "-X main.version=$app_version" .
+RUN CGO_ENABLED=0 go build -o yggy -ldflags "-X main.version=$app_version" .
 
 
 FROM alpine as runner
 RUN mkdir -p /run
 WORKDIR /run
-COPY --from=backend /app/BOILERPLATE ./BOILERPLATE
-RUN chmod a+x BOILERPLATE
+COPY --from=backend /app/yggy ./yggy
+RUN chmod a+x yggy
 COPY --from=frontend /dist ./dist
-ENV BOILERPLATE_ENV=prod
-ENTRYPOINT /run/BOILERPLATE
+ENV YGGY_ENV=prod
+ENTRYPOINT /run/yggy
 

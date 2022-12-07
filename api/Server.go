@@ -1,18 +1,19 @@
 package api
 
 import (
-	"BOILERPLATE/utils"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 	"net/http"
+	"yellowgreenorgreenyellow/config"
 )
 
-func Serve(hostAndPort string) {
+func Serve() {
 
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-
+	engine.SetTrustedProxies(config.TrustedProxies())
 	//serve static files from dist
 	engine.Use(static.Serve("/", static.LocalFile("./dist", false)))
 
@@ -28,22 +29,17 @@ func Serve(hostAndPort string) {
 
 	registerRoutes(apiGroup)
 
-	log.WithFields(log.Fields{"address": hostAndPort}).Info("Starting server")
-	engine.Run(hostAndPort)
+	log.WithFields(log.Fields{"address": config.HostAndPort()}).Info("Starting server")
+	engine.Run(config.HostAndPort())
 }
 
 func registerRoutes(apiGroup *gin.RouterGroup) {
 	// You can separate your routes in sub folders, feel free to organize as you want
 	apiGroup.GET("/", func(c *gin.Context) {
-		c.Writer.WriteHeader(http.StatusOK)
-		c.Writer.WriteString("it works")
+		id, _ := uuid.NewUUID()
+		c.JSON(http.StatusOK, gin.H{"uuid": id.String()})
 	})
-
-	apiGroup.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"uptime": utils.Uptime().Seconds(),
-			"status": "ok",
-		})
-	})
+	apiGroup.POST("/store", Store)
+	apiGroup.GET("/stats", Stats)
 
 }
