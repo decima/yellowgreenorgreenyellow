@@ -41,9 +41,6 @@
                 },
                 itemStyle: {
                     color: item[0],
-                },
-                label: {
-                    show: true,
                 }
 
             })
@@ -63,9 +60,6 @@
                 },
                 itemStyle: {
                     color: item[0],
-                },
-                label: {
-                    show: true,
                 }
 
             })

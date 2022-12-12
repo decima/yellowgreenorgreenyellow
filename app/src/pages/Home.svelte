@@ -42,8 +42,8 @@
             </div>
 
             <div class="card-actions flex justify-end items-center">
-                <button class="btn btn-primary  " on:click={()=>{saveVote("yellowgreen")}}>Yellowgreen</button>
-                <button class="btn btn-secondary" on:click={()=>{saveVote("greenyellow")}}>Greenyellow</button>
+                <button class="btn btn-primary  " on:click={()=>{saveVote("greenyellow")}}>Greenyellow</button>
+                <button class="btn btn-secondary" on:click={()=>{saveVote("yellowgreen")}}>Yellowgreen</button>
             </div>
             <span>Please, for fair stats, vote only once.</span>
             <Link to="stats">

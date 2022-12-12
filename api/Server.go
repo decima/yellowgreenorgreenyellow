@@ -13,7 +13,10 @@ func Serve() {
 
 	//gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
-	engine.SetTrustedProxies(config.TrustedProxies())
+	err := engine.SetTrustedProxies(config.TrustedProxies())
+	if err != nil {
+		panic(err)
+	}
 	//serve static files from dist
 	engine.Use(static.Serve("/", static.LocalFile("./dist", false)))
 

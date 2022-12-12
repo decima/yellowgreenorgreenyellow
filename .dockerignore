@@ -1,5 +1,5 @@
-node_modules
-app/node_modules
-app/dist
-dist
+#node_modules
+#app/node_modules
+#app/dist
+#dist
 config.yaml

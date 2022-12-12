@@ -35,7 +35,10 @@ type storeBody struct {
 
 func Store(c *gin.Context) {
 	ip := c.ClientIP()
-	log.Warn(ip)
+	log.Info("FORWARED-FOR : " + c.Request.Header.Get("X-Forwarded-For"))
+	log.Info("REAL-IP : " + c.Request.Header.Get("X-Real-Ip"))
+	log.Info(ip)
+
 	if t, ok := lockedIP[ip]; ok {
 		if t.After(time.Now()) {
 			c.JSON(429, gin.H{
@@ -47,6 +50,7 @@ func Store(c *gin.Context) {
 			delete(lockedIP, ip)
 		}
 	}
+
 	body := storeBody{}
 	c.Bind(&body)
 
