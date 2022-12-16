@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/influxdata/influxdb-client-go/v2/api/write"
-	log "github.com/sirupsen/logrus"
 	"strconv"
 	"strings"
 	"time"
@@ -35,12 +34,12 @@ type storeBody struct {
 
 func Store(c *gin.Context) {
 	ip := c.ClientIP()
-	log.Info("FORWARED-FOR : " + c.Request.Header.Get("X-Forwarded-For"))
-	log.Info("REAL-IP : " + c.Request.Header.Get("X-Real-Ip"))
-	log.Info(ip)
 
 	if t, ok := lockedIP[ip]; ok {
 		if t.After(time.Now()) {
+
+			lockedIP[ip].Add(time.Minute)
+
 			c.JSON(429, gin.H{
 				"message": "Seems like you are an extreme voter, please wait " + strconv.Itoa(int(lockedIP[ip].Sub(time.Now()).Seconds())) + " seconds before voting again.",
 				"until":   lockedIP[ip].Format("2006-01-02T15-04-05"),

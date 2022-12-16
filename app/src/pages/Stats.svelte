@@ -15,12 +15,15 @@
 
     let best = "yellowgreen";
     let worst = "greenyellow";
+    let equals=false;
 
     onMount(async () => {
         stats = (await (await fetch("/api/stats")).json()).stats
         if (stats.split.greenyellow > stats.split.yellowgreen) {
             best = "greenyellow";
             worst = "yellowgreen"
+        }else if(stats.split.greenyellow===stats.split.yellowgreen){
+            equals=true;
         }
         for (const item of Object.entries(stats.split)) {
             pieRepartition.push({name: item[0], value: item[1]})
@@ -99,11 +102,11 @@
 <div class="card bg-base-100 shadow-xl container p-4 m-4 mx-auto">
     <div class="w-full">
         <Link to="/">
-            <div class="btn btn-accent">Back to vote</div>
+            <div class="btn btn-ghost">← Back to vote</div>
         </Link>
     </div>
 
-    <h1 class="text-5xl">Statistics</h1>
+    <h1 class="text-5xl font-bold">Results</h1>
     {#if loaded}
         <div>
             <div class="flex flex-col md:flex-row">
@@ -128,7 +131,12 @@
 
             <div class="grid h-56 md:h-96 place-items-center">
                 <p>
+                    {#if (equals)}
+                        <b class="text-4xl" style="color: black;">No one</b> wins 😭.
+                    {:else }
                     <b class="text-4xl" style="color: {best};">🎉 {best} 🎉</b> wins.
+
+                    {/if}
                 </p>
             </div>
 

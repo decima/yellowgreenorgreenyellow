@@ -32,7 +32,7 @@
     <div class="card bg-base-100 shadow-xl">
 
         <div class="card-body items-center text-center">
-            <h1 class="card-title">⚡️⚡️⚡️ Choose Wisely ⚡️⚡️⚡️</h1>
+            <h1 class="card-title">⚡️⚡️⚡️ Which one do you prefer? ⚡️⚡️⚡️</h1>
             <div class="text-error">
                 &nbsp;
                 {#if error}
@@ -43,11 +43,12 @@
 
             <div class="card-actions flex justify-end items-center">
                 <button class="btn btn-primary  " on:click={()=>{saveVote("greenyellow")}}>Greenyellow</button>
+                <span class="text-5xl font-bold">VS</span>
                 <button class="btn btn-secondary" on:click={()=>{saveVote("yellowgreen")}}>Yellowgreen</button>
             </div>
-            <span>Please, for fair stats, vote only once.</span>
+            <span class=" text-xs">For more fair results, please consider voting once.</span>
             <Link to="stats">
-                <div class="btn">see results</div>
+                <div class="btn btn-ghost">see results</div>
             </Link>
         </div>
     </div>
