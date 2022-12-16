@@ -21,6 +21,6 @@
 
     main {
         overflow: auto;
-        background: linear-gradient(-115deg, #e3f1cf 0%, #b9ff46 100%);
+        background: linear-gradient(-90deg,yellowgreen 40%,greenyellow 60%);
     }
 </style>
